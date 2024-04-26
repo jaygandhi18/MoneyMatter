@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/67c66657c7.js"></script>
+</head>
+
+<body class="body-feedback">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .section-feedback {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background: url("images/customer-feedback-form.png");
+            background-size: cover;
+            background-position: center;
+            filter: blur(2px) brightness(30%);
+        }
+
+        .body-feedback {
+            display: flex;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .container-feedback {
+            width: 500px;
+            background: rgb(0, 0, 0, 0.6);
+            box-shadow: 0 0 8px rgb(179, 175, 175);
+            opacity: 0.6;
+        }
+
+        .form-feedback {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .container-feedback form {
+            width: 100%;
+            text-align: center;
+            padding: 25px 20px;
+        }
+
+        .form-feedback h1 {
+            padding: 10px 0;
+            margin-bottom: 30px;
+        }
+
+        .form-feedback .id {
+            position: relative;
+        }
+
+        .id {
+            position: absolute;
+            font-size: 20px;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+
+        .form-feedback input {
+            width: 100%;
+            height: 50px;
+            margin: 4px 0;
+            border: 1px solid gray;
+            border-radius: 3px;
+            background: #181717;
+            padding: 0 15px;
+            font-size: 20px;
+            color: white;
+        }
+
+        .form-feedback textarea {
+            padding: 5px 15px;
+            border: 1px solid gray;
+            border-radius: 3px;
+            background: #181717;
+            font-size: 20px;
+            width: 100%;
+            margin: 4px 0;
+            color: white;
+        }
+
+        .form-feedback button {
+            margin-top: 5px;
+            border: none;
+            background: rgb(42, 142, 218);
+            color: #222;
+            padding: 10px 0;
+            width: 100%;
+            font-size: 20px;
+            font-weight: 800;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .form-feedback input:focus,
+        .form-feedback textarea:focus {
+            border: 1px solid #00fff0;
+            color: #00fff0;
+            transition: all 0.3s ease;
+        }
+    </style>
+    <section class="section-feedback"></section>
+    <div class="container-feedback">
+        <form class="form-feedback" id="feedback-form">
+            <h1 style="color: white;">Give us your Feedback!</h1>
+            <div class="id">
+                <input type="text" id="name" placeholder="Name" />
+                <i class="far fa-user"></i>
+            </div>
+            <div class="id">
+                <input type="text" id="phone" placeholder="Phone number" />
+                <i class="fa fa-phone"></i>
+            </div>
+            <div class="id">
+                <input type="text" id="email" placeholder="Email address" />
+                <div id="email-error"></div>
+                <i class="fas fa-at"></i>
+            </div>
+            <textarea cols="15" rows="5" placeholder="What changes can we make?"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+<script>
+    function isValidEmail(email) {
+        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return pattern.test(email);
+    }
+    function handleSubmit(event) {
+        const form = document.getElementById('feedback-form');
+        const emailInput = document.getElementById('email');
+        const errorMessage = document.getElementById('email-error');
+        const email = emailInput.value.trim();
+
+        if (!isValidEmail(email)) {
+            errorMessage.textContent = 'Please enter a valid email address';
+            event.preventDefault();
+        } else {
+            errorMessage.textContent = '';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('feedback-form');
+        form.addEventListener('submit', handleSubmit);
+    });
+
+</script>
+
+</html>
