@@ -3,11 +3,175 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css">
+    
     <title>Investment Tracker</title>
+    <style>
+      body {
+        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+      
+        margin: 0;
+        padding: 0;
+        background: #6ad4dd;
+        overflow-x: hidden;
+        animation: gradient 2s ease infinite;
+      }
+      Edit Full Screen Copy code @keyframes gradient {
+        0% {
+          background-position: 0%;
+        }
+        50% {
+          background-position: 100%;
+        }
+        100% {
+          background-position: 0%;
+        }
+      }
+      
+      .container {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: #1679ab;
+        padding: 20px;
+        border-radius: 10px;
+        height: 750px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .container:hover {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      }
+      
+      h2 {
+        text-align: center;
+        color: white;
+        animation: fadeIn 1s ease-in-out;
+      }
+      
+      label {
+        font-weight: bold;
+        font-size: 1.5em;
+        color: white;
+      }
+      
+      input[type="number"] {
+        width: 100px;
+        height: 50px;
+        font-size: 1.5em;
+        padding: 5px;
+        margin-right: 10px;
+        transition: all 0.3s ease-in-out;
+        color: rgb(10, 6, 6);
+      }
+      
+      input[type="number"]:hover {
+        background-color: #6490d2;
+      }
+      
+      button {
+        padding: 8px 16px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 10%;
+        cursor: pointer;
+        font-size: 1.5em;
+        margin-top: 10px;
+        display: block;
+        height: 50px;
+        width: 100%;
+        border-radius: 5px;
+        transition: all 0.3s ease-in-out;
+      }
+      
+      button:hover {
+        background-color: #45a049;
+      }
+      
+      .investments {
+        display: flex;
+      
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      
+      .investment-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      
+      .investment-item img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+      }
+      
+      .investment-item input[type="number"],
+      .investment-item input[type="text"] {
+        width: calc(50% - 60px);
+      }
+      
+      #totalInvestment,
+      #totalReturn,
+      #interestReturn {
+        margin-top: 20px;
+        color: white;
+      }
+      
+      #interestReturn li {
+        margin-bottom: 5px;
+      }
+      
+      .background-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.5;
+      }
+      
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      h1 {
+        text-align: center;
+        margin: 0;
+      }
+      .pic {
+        height: 20%;
+        width: 100%;
+      }
+      .desc {
+        height: 25px;
+        width: 38%;
+        font-size: 2.5em;
+        font-family: Arial, Helvetica, sans-serif;
+        position: absolute;
+        left: 750px;
+      }
+      .dg1 {
+        height: 500px;
+        background-color: #f8f6e3;
+      }
+      h1 {
+        font-size: 3em;
+      }
+      
+    </style>
   </head>
   <body>
-    <img class="pic" src="images/peakpx.jpg">
+    <img class="pic" src="peakpx.jpg">
     <div class="dg1"> <h1>Welcome to Investment Tracker!</h2>
       <p class="desc">
         Our Investment Tracker is a simple web application that allows you to
@@ -93,7 +257,95 @@
         alt="Investment"
       />
     </div>
-    <script src="script.js"></script>
+    <script >
+      function calculateTotal() {
+        var stocks = parseFloat(document.getElementById("stocks").value) || 0;
+        var mutualFund = parseFloat(document.getElementById("mutualFund").value) || 0;
+        var fd = parseFloat(document.getElementById("fd").value) || 0;
+        var gold = parseFloat(document.getElementById("gold").value) || 0;
+        var realEstate = parseFloat(document.getElementById("realEstate").value) || 0;
+      
+        var stocksRate = parseFloat(document.getElementById("stocksRate").value) || 0;
+        var mutualFundRate =
+          parseFloat(document.getElementById("mutualFundRate").value) || 0;
+        var fdRate = parseFloat(document.getElementById("fdRate").value) || 0;
+        var goldRate = parseFloat(document.getElementById("goldRate").value) || 0;
+        var realEstateRate =
+          parseFloat(document.getElementById("realEstateRate").value) || 0;
+      
+        var totalInvestment = stocks + mutualFund + fd + gold + realEstate;
+      
+        var interestReturn = calculateInterestReturn(
+          stocks,
+          mutualFund,
+          fd,
+          gold,
+          realEstate,
+          stocksRate,
+          mutualFundRate,
+          fdRate,
+          goldRate,
+          realEstateRate
+        );
+      
+        var totalReturn = interestReturn.reduce((acc, val) => acc + val, 0);
+      
+        document.getElementById("totalInvestment").textContent =
+          "Total Investment: $" + totalInvestment.toFixed(2);
+        document.getElementById("totalReturn").textContent =
+          "Total Return: $" + totalReturn.toFixed(2);
+      
+        var interestReturnList = document.getElementById("interestReturn");
+        interestReturnList.innerHTML = "";
+        interestReturn.forEach(function (interest, index) {
+          var listItem = document.createElement("li");
+          listItem.textContent =
+            "Interest Return for " + getTypeName(index) + ": $" + interest.toFixed(2);
+          interestReturnList.appendChild(listItem);
+        });
+      }
+      
+      function calculateInterestReturn(
+        stocks,
+        mutualFund,
+        fd,
+        gold,
+        realEstate,
+        stocksRate,
+        mutualFundRate,
+        fdRate,
+        goldRate,
+        realEstateRate
+      ) {
+        var interestReturn = [
+          (stocks * stocksRate) / 100,
+          (mutualFund * mutualFundRate) / 100,
+          (fd * fdRate) / 100,
+          (gold * goldRate) / 100,
+          (realEstate * realEstateRate) / 100,
+        ];
+      
+        return interestReturn;
+      }
+      
+      function getTypeName(index) {
+        switch (index) {
+          case 0:
+            return "Stocks";
+          case 1:
+            return "Mutual Fund";
+          case 2:
+            return "Fixed Deposit";
+          case 3:
+            return "Gold";
+          case 4:
+            return "Real Estate";
+          default:
+            return "Unknown";
+        }
+      }
+      
+    </script>
 
   </body>
 </html>
