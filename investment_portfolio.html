@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <title>Investment Tracker</title>
+  </head>
+  <body>
+    <img class="pic" src="peakpx.jpg">
+    <div class="dg1"> <h1>Welcome to Investment Tracker!</h2>
+      <p class="desc">
+        Our Investment Tracker is a simple web application that allows you to
+        track your investments in various assets such as stocks, mutual funds,
+        fixed deposits, gold, and real estate. You can enter the amount invested
+        and the interest rate for each asset, and the application will calculate
+        the total investment and the total interest return for you.
+      </p></div>
+   
+    <div class="container">
+      <div class="investments">
+        <div class="investment-item">
+          <img src="https://source.unsplash.com/100x100/?stocks" alt="Stocks" />
+          <label for="stocks">Stocks:</label>
+          <input type="number" id="stocks" placeholder="Enter amount" />
+          <input
+            type="number"
+            id="stocksRate"
+            placeholder="Enter interest rate (%)"
+          />
+        </div>
+        <div class="investment-item">
+          <img
+            src="https://source.unsplash.com/100x100/?mutual-fund"
+            alt="Mutual Fund"
+          />
+          <label for="mutualFund">Mutual Fund:</label>
+          <input type="number" id="mutualFund" placeholder="Enter amount" />
+          <input
+            type="number"
+            id="mutualFundRate"
+            placeholder="Enter interest rate (%)"
+          />
+        </div>
+        <div class="investment-item">
+          <img
+            src="https://source.unsplash.com/100x100/?fixed-deposit"
+            alt="Fixed Deposit"
+          />
+          <label for="fd">Fixed Deposit:</label>
+          <input type="number" id="fd" placeholder="Enter amount" />
+          <input
+            type="number"
+            id="fdRate"
+            placeholder="Enter interest rate (%)"
+          />
+        </div>
+        <div class="investment-item">
+          <img src="https://source.unsplash.com/100x100/?gold" alt="Gold" />
+          <label for="gold">Gold:</label>
+          <input type="number" id="gold" placeholder="Enter amount" />
+          <input
+            type="number"
+            id="goldRate"
+            placeholder="Enter interest rate (%)"
+          />
+        </div>
+        <div class="investment-item">
+          <img
+            src="https://source.unsplash.com/100x100/?real-estate"
+            alt="Real Estate"
+          />
+          <label for="realEstate">Real Estate:</label>
+          <input type="number" id="realEstate" placeholder="Enter amount" />
+          <input
+            type="number"
+            id="realEstateRate"
+            placeholder="Enter interest rate (%)"
+          />
+        </div>
+      </div>
+
+      <button onclick="calculateTotal()">Calculate</button>
+
+      <h3 id="totalInvestment"></h3>
+      <h3 id="totalReturn"></h3>
+      <h3>Interest Return</h3>
+      <ul id="interestReturn"></ul>
+    </div>
+    <div class="background-image">
+      <img
+        src="https://source.unsplash.com/1600x900/?investment,finance"
+        alt="Investment"
+      />
+    </div>
+    <script src="script.js"></script>
+
+  </body>
+</html>
